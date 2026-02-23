@@ -1,0 +1,6 @@
+# Pastas compiladas do Maven
+target/
+*.class
+
+# Configurações do VS Code
+.vscode/
