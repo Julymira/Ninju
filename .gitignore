@@ -5,6 +5,7 @@ target/
 # Configurações do VS Code
 .vscode/
 
-# Chaves privadas — nunca commitar
+# Chaves JWT — geradas localmente, nunca commitar
 *.pem
 src/main/resources/privateKey.pem
+src/main/resources/publicKey.pem

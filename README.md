@@ -11,17 +11,29 @@ Back-end REST construído com **Quarkus 3**, **Java 21**, **JAX-RS**, **Hibernat
 |---|---|
 | Java JDK | 21 |
 | Maven | 3.9+ |
+| OpenSSL | qualquer versão recente |
+
+> **OpenSSL no Windows:** já vem incluso no [Git for Windows](https://git-scm.com/download/win). Após instalar o Git, o `openssl` fica disponível no Git Bash e no terminal do VS Code.
 
 > Não é necessário instalar banco de dados. O H2 sobe automaticamente em memória junto com a aplicação.
 
 ---
 
-## Clonar o repositório
+## Configuração inicial após clonar
+
+As chaves RSA usadas para assinar e verificar os tokens JWT **não são versionadas** por segurança.  
+É necessário gerá-las uma única vez após clonar o repositório.
+
+Abra o terminal do VS Code (`Ctrl + J`) e rode os dois comandos abaixo:
 
 ```bash
-git clone <URL-do-repositório>
-cd Ninju
+openssl genrsa -out src/main/resources/privateKey.pem 2048
+openssl rsa -pubout -in src/main/resources/privateKey.pem -out src/main/resources/publicKey.pem
 ```
+
+> O `openssl` já vem instalado junto com o [Git for Windows](https://git-scm.com/download/win). Se o comando não for reconhecido, instale o Git e reinicie o VS Code.
+
+Os arquivos `privateKey.pem` e `publicKey.pem` serão criados em `src/main/resources/` e ignorados pelo `.gitignore`.
 
 ---
 
@@ -32,23 +44,25 @@ mvn quarkus:dev
 ```
 
 A API ficará disponível em `http://localhost:8080`.  
-O banco H2 é recriado do zero a cada inicialização (`drop-and-create`).
+O banco H2 é recriado do zero a cada inicialização (`drop-and-create`).  
+Os dados de seed (usuários, alimentos e treinos) são inseridos automaticamente.
+
+**Credenciais de teste:**
+
+| E-mail | Senha | Perfil |
+|---|---|---|
+| admin@ninju.com | password123 | ADMIN |
+| joao@ninju.com | password123 | USER |
+| maria@ninju.com | password123 | USER |
 
 ---
 
-## Rodar os testes
+## Documentação da API
 
-```bash
-mvn test
+Com a aplicação rodando, acesse o Swagger UI:
+
 ```
-
----
-
-## Gerar o JAR e rodar em produção
-
-```bash
-mvn package
-java -jar target/quarkus-app/quarkus-run.jar
+http://localhost:8080/q/swagger-ui
 ```
 
 ---
@@ -57,11 +71,18 @@ java -jar target/quarkus-app/quarkus-run.jar
 
 ```
 src/main/java/com/ninju/
-├── controller/   # Endpoints JAX-RS (camada View/Controller do MVC)
+├── controller/   # Endpoints JAX-RS (camada Controller do MVC)
 ├── bo/           # Business Objects — regras de negócio
 ├── dao/          # Data Access Objects — acesso ao banco
 ├── dto/          # Data Transfer Objects — contratos da API
-└── model/        # Entidades JPA (User, Food, Workout, DailyLog, AuditLog)
+├── model/        # Entidades JPA
+└── util/         # Utilitários (BCrypt, DataSeeder)
+
+src/main/resources/META-INF/resources/
+├── index.html        # Tela de login
+├── pages/            # Demais páginas da aplicação
+├── css/              # Estilos
+└── js/               # Lógica do front-end
 ```
 
 ---
@@ -70,35 +91,44 @@ src/main/java/com/ninju/
 
 | Entidade | Descrição |
 |---|---|
-| `User` | Usuário da aplicação com papel `ADMIN` ou `USER` |
-| `Food` | Alimento com informações nutricionais (calorias, proteína, carboidrato, gordura) |
+| `User` | Usuário com papel `ADMIN` ou `USER` |
+| `Food` | Alimento com informações nutricionais |
 | `Workout` | Exercício físico com categoria e estimativa calórica |
-| `DailyLog` | Diário diário vinculando refeições e treinos do usuário |
-| `AuditLog` | Registro de auditoria de todas as ações executadas no sistema |
+| `DailyLog` | Diário diário de refeições e treinos do usuário |
+| `AuditLog` | Registro de auditoria de todas as ações do sistema |
+
+---
+
+## Endpoints disponíveis
+
+| Método | Endpoint | Acesso |
+|---|---|---|
+| POST | `/auth/login` | Público |
+| GET | `/users` | ADMIN |
+| POST | `/users` | ADMIN |
+| PUT | `/users/{id}` | ADMIN |
+| DELETE | `/users/{id}` | ADMIN |
+| GET | `/foods` | ADMIN + USER |
+| GET | `/foods/{id}` | ADMIN + USER |
+| GET | `/workouts` | ADMIN + USER |
+| GET | `/workouts/{id}` | ADMIN + USER |
+| GET | `/daily-logs` | ADMIN + USER (logs próprios) |
+| POST | `/daily-logs/refeicao` | ADMIN + USER |
+| POST | `/daily-logs/treino` | ADMIN + USER |
 
 ---
 
 ## Requisitos do projeto atendidos
 
-- [x] Linguagem Java 21 + Quarkus 3 (Java EE / Jakarta EE)
+- [x] Linguagem Java 21 + Quarkus 3 (Jakarta EE)
 - [x] Arquitetura MVC em camadas
 - [x] JAX-RS para endpoints REST
 - [x] Padrão DAO e Entity para cada entidade
-- [x] Banco H2 com Hibernate ORM
-- [ ] Padrão BO (Business Objects)
-- [ ] DTOs para comunicação front-end ↔ back-end
-- [ ] Autenticação de usuário (e-mail + senha)
-- [ ] Controle de perfil / roles (ADMIN vs USER)
-- [ ] Casos de uso de domínio completos (registro de refeição e treino)
-- [ ] Rastreabilidade e auditoria (AuditLog em todas as ações)
+- [x] Padrão BO para todas as regras de negócio
+- [x] DTOs para comunicação front-end ↔ back-end
+- [x] Autenticação de usuário (e-mail + senha com BCrypt)
+- [x] Controle de perfil / roles (ADMIN vs USER) com JWT
+- [x] Caso de uso 1: Registrar refeição do dia
+- [x] Caso de uso 2: Registrar treino do dia
+- [x] Rastreabilidade e auditoria (AuditLog em todas as ações)
 - [ ] Front-end (HTML, CSS, JS)
-
----
-
-## Endpoint de teste atual
-
-```
-GET /teste
-```
-
-Retorna uma lista de usuários cadastrados no banco (usado para validar a conexão com H2).
