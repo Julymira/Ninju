@@ -8,6 +8,7 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
+import java.util.List;
 
 @ApplicationScoped
 public class UserDao {
@@ -18,6 +19,25 @@ public class UserDao {
     @Transactional
     public void save(User user) {
         em.persist(user);
+    }
+
+    public User findById(Long id) {
+        return em.find(User.class, id);
+    }
+
+    public List<User> findAll() {
+        return em.createQuery("SELECT u FROM User u ORDER BY u.name", User.class).getResultList();
+    }
+
+    @Transactional
+    public void update(User user) {
+        em.merge(user);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        User user = em.find(User.class, id);
+        if (user != null) em.remove(user);
     }
 
     public User authenticate(String email, String plainPassword) {
