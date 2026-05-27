@@ -9,6 +9,7 @@ import com.ninju.model.DailyLog;
 import com.ninju.model.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,6 +35,7 @@ public class DailyLogBO {
     }
 
     // Caso de uso 1: Registrar refeição do dia
+    @Transactional
     public DailyLogResponseDTO registrarRefeicao(Long userId, DailyLogRequestDTO dto, String executedBy) {
         if (dto.mealsNotes == null || dto.mealsNotes.isBlank())
             throw new IllegalArgumentException("Notas da refeição são obrigatórias.");
@@ -50,6 +52,7 @@ public class DailyLogBO {
     }
 
     // Caso de uso 2: Registrar treino do dia
+    @Transactional
     public DailyLogResponseDTO registrarTreino(Long userId, DailyLogRequestDTO dto, String executedBy) {
         if (dto.workoutNotes == null || dto.workoutNotes.isBlank())
             throw new IllegalArgumentException("Notas do treino são obrigatórias.");

@@ -4,6 +4,7 @@ import com.ninju.bo.AuthBO;
 import com.ninju.dto.LoginRequestDTO;
 import com.ninju.dto.LoginResponseDTO;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -23,6 +24,7 @@ public class AuthController {
 
     @POST
     @Path("/login")
+    @PermitAll
     public Response login(LoginRequestDTO dto) {
         try {
             LoginResponseDTO response = authBO.login(dto);

@@ -26,7 +26,7 @@ public class DailyLogController {
     public Response listMine(@Context SecurityContext sc) {
         try {
             JWTCallerPrincipal principal = (JWTCallerPrincipal) sc.getUserPrincipal();
-            Long userId = principal.getClaim("userId");
+            Long userId = ((Number) principal.getClaim("userId")).longValue();
             return Response.ok(dailyLogBO.listByUser(userId, principal.getName())).build();
         } catch (Exception e) {
             return Response.serverError().entity(Map.of("erro", e.getMessage())).build();
@@ -38,7 +38,7 @@ public class DailyLogController {
     public Response registrarRefeicao(DailyLogRequestDTO dto, @Context SecurityContext sc) {
         try {
             JWTCallerPrincipal principal = (JWTCallerPrincipal) sc.getUserPrincipal();
-            Long userId = principal.getClaim("userId");
+            Long userId = ((Number) principal.getClaim("userId")).longValue();
             return Response.ok(dailyLogBO.registrarRefeicao(userId, dto, principal.getName())).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("erro", e.getMessage())).build();
@@ -50,7 +50,7 @@ public class DailyLogController {
     public Response registrarTreino(DailyLogRequestDTO dto, @Context SecurityContext sc) {
         try {
             JWTCallerPrincipal principal = (JWTCallerPrincipal) sc.getUserPrincipal();
-            Long userId = principal.getClaim("userId");
+            Long userId = ((Number) principal.getClaim("userId")).longValue();
             return Response.ok(dailyLogBO.registrarTreino(userId, dto, principal.getName())).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("erro", e.getMessage())).build();
