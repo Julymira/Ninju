@@ -1,8 +1,10 @@
 package com.ninju.dao;
 
 import com.ninju.model.User;
+import com.ninju.util.PasswordUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -18,18 +20,22 @@ public class UserDao {
         em.persist(user);
     }
 
-    public User authenticate(String email, String password) {
+    public User authenticate(String email, String plainPassword) {
         try {
             TypedQuery<User> query = em.createQuery(
-                "SELECT u FROM User u WHERE u.email = :email AND u.password = :password", User.class);
+                "SELECT u FROM User u WHERE u.email = :email", User.class);
             query.setParameter("email", email);
-            query.setParameter("password", password);
-            
-            return query.getSingleResult();
-            
-        } catch (Exception e) {
-            
-            return null; 
+
+            User user = query.getSingleResult();
+
+            if (!PasswordUtil.verify(plainPassword, user.getPassword())) {
+                return null;
+            }
+
+            return user;
+
+        } catch (NoResultException e) {
+            return null;
         }
     }
 }
