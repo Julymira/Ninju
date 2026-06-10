@@ -7,12 +7,88 @@
     <link rel="stylesheet" href="../css/global.css">
 </head>
 <body>
+    <nav class="navbar">
+        <a href="dashboard.html" class="navbar-brand">NINJU</a>
+        <ul class="navbar-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="daily-log.html">Diário</a></li>
+            <li><a href="foods.html">Alimentos</a></li>
+            <li><a href="workouts.html">Treinos</a></li>
+            <li><a href="users.html" class="active">Usuários</a></li>
+        </ul>
+        <div class="navbar-user">
+            <span id="user-name"></span>
+            <button class="btn-logout" onclick="logout()">Sair</button>
+        </div>
+    </nav>
 
-    <!-- TODO: menu de navegação -->
+    <div class="container">
+        <h1 class="page-title">👥 Usuários</h1>
 
-    <!-- TODO: listagem de usuários (tabela) -->
-    <!-- TODO: formulário de cadastro/edição de usuário (nome, email, senha, role) -->
-    <!-- ATENÇÃO: esta página deve ser acessível apenas por ADMIN -->
+        <div id="alert" class="alert alert-error"></div>
+        <div id="alert-success" class="alert alert-success"></div>
+
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <span class="card-title" style="margin-bottom:0; border:none; padding:0;">Lista de Usuários</span>
+                <button class="btn btn-primary" onclick="abrirModalCriar()">+ Novo Usuário</button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Perfil</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-body">
+                        <tr><td colspan="4" class="empty-state">Carregando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal criar/editar usuário -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title" id="modal-title">Novo Usuário</span>
+                <button class="modal-close" onclick="fecharModal()">&times;</button>
+            </div>
+
+            <div id="modal-alert" class="alert alert-error"></div>
+
+            <form id="form-usuario">
+                <input type="hidden" id="user-id">
+                <div class="form-group">
+                    <label for="user-nome">Nome</label>
+                    <input type="text" id="user-nome" class="form-control" placeholder="Nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-email">E-mail</label>
+                    <input type="email" id="user-email" class="form-control" placeholder="email@exemplo.com" required>
+                </div>
+                <div class="form-group" id="campo-senha">
+                    <label for="user-senha">Senha</label>
+                    <input type="password" id="user-senha" class="form-control" placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label for="user-role">Perfil</label>
+                    <select id="user-role" class="form-control">
+                        <option value="USER">USER</option>
+                        <option value="ADMIN">ADMIN</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="../js/auth.js"></script>
     <script src="../js/api.js"></script>

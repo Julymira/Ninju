@@ -8,10 +8,29 @@
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
+    <div class="login-box">
+        <div class="login-logo">
+            <h1>NINJU</h1>
+            <p>Acompanhamento Fitness e Nutricional</p>
+        </div>
 
-    <!-- TODO: formulário de login (email + senha) -->
+        <div id="alert" class="alert alert-error"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+    </div>
 
     <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
     <script src="js/login.js"></script>
 </body>
 </html>

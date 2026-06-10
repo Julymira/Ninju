@@ -1,3 +1,52 @@
-/* Estilos exclusivos do dashboard */
+.welcome {
+    margin-bottom: 28px;
+}
 
-/* TODO: cards de resumo, layout de grid, widgets do dia */
+.welcome h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.welcome p {
+    color: #6c757d;
+    margin-top: 4px;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.nav-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 4px solid #28a745;
+}
+
+.nav-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.nav-card .icon {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+}
+
+.nav-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.nav-card p {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-top: 6px;
+}

@@ -8,10 +8,50 @@
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
+    <nav class="navbar">
+        <a href="dashboard.html" class="navbar-brand">NINJU</a>
+        <ul class="navbar-links">
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="daily-log.html">Diário</a></li>
+            <li><a href="foods.html">Alimentos</a></li>
+            <li><a href="workouts.html">Treinos</a></li>
+            <li id="nav-users" style="display:none"><a href="users.html">Usuários</a></li>
+        </ul>
+        <div class="navbar-user">
+            <span id="user-name"></span>
+            <button class="btn-logout" onclick="logout()">Sair</button>
+        </div>
+    </nav>
 
-    <!-- TODO: menu de navegação (links para as páginas) -->
+    <div class="container">
+        <div class="welcome">
+            <h2>Olá, <span id="welcome-name"></span>!</h2>
+            <p>O que vamos fazer hoje?</p>
+        </div>
 
-    <!-- TODO: conteúdo principal do dashboard (resumo do dia, atalhos) -->
+        <div class="cards-grid" id="cards-grid">
+            <a href="daily-log.html" class="nav-card">
+                <div class="icon">📓</div>
+                <h3>Diário do Dia</h3>
+                <p>Registre suas refeições e treinos</p>
+            </a>
+            <a href="foods.html" class="nav-card">
+                <div class="icon">🥗</div>
+                <h3>Alimentos</h3>
+                <p>Tabela nutricional de alimentos</p>
+            </a>
+            <a href="workouts.html" class="nav-card">
+                <div class="icon">🏋️</div>
+                <h3>Treinos</h3>
+                <p>Catálogo de exercícios</p>
+            </a>
+            <a href="users.html" class="nav-card" id="card-users" style="display:none">
+                <div class="icon">👥</div>
+                <h3>Usuários</h3>
+                <p>Gerenciar usuários do sistema</p>
+            </a>
+        </div>
+    </div>
 
     <script src="../js/auth.js"></script>
     <script src="../js/api.js"></script>

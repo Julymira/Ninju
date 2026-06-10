@@ -7,14 +7,81 @@
     <link rel="stylesheet" href="../css/global.css">
 </head>
 <body>
+    <nav class="navbar">
+        <a href="dashboard.html" class="navbar-brand">NINJU</a>
+        <ul class="navbar-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="daily-log.html" class="active">Diário</a></li>
+            <li><a href="foods.html">Alimentos</a></li>
+            <li><a href="workouts.html">Treinos</a></li>
+            <li id="nav-users" style="display:none"><a href="users.html">Usuários</a></li>
+        </ul>
+        <div class="navbar-user">
+            <span id="user-name"></span>
+            <button class="btn-logout" onclick="logout()">Sair</button>
+        </div>
+    </nav>
 
-    <!-- TODO: menu de navegação -->
+    <div class="container">
+        <h1 class="page-title">📓 Diário do Dia</h1>
 
-    <!-- CASO DE USO 1: Registrar refeição do dia -->
-    <!-- TODO: formulário/área para anotar o que comeu (notas de refeição) -->
+        <div id="alert" class="alert alert-error"></div>
+        <div id="alert-success" class="alert alert-success"></div>
 
-    <!-- CASO DE USO 2: Registrar treino do dia -->
-    <!-- TODO: formulário/área para anotar o treino realizado (notas de treino) -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+
+            <!-- Caso de uso 1: Registrar Refeição -->
+            <div class="card">
+                <div class="card-title">🥗 Registrar Refeição</div>
+                <form id="form-refeicao">
+                    <div class="form-group">
+                        <label for="data-refeicao">Data</label>
+                        <input type="date" id="data-refeicao" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="notas-refeicao">O que você comeu?</label>
+                        <textarea id="notas-refeicao" class="form-control" placeholder="Ex: Café da manhã: aveia + banana. Almoço: arroz, feijão, frango..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Refeição</button>
+                </form>
+            </div>
+
+            <!-- Caso de uso 2: Registrar Treino -->
+            <div class="card">
+                <div class="card-title">🏋️ Registrar Treino</div>
+                <form id="form-treino">
+                    <div class="form-group">
+                        <label for="data-treino">Data</label>
+                        <input type="date" id="data-treino" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="notas-treino">O que você treinou?</label>
+                        <textarea id="notas-treino" class="form-control" placeholder="Ex: Corrida 30 min + musculação peito e tríceps..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Treino</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Histórico -->
+        <div class="card">
+            <div class="card-title">📅 Histórico</div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Refeições</th>
+                            <th>Treino</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logs-body">
+                        <tr><td colspan="3" class="empty-state">Carregando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <script src="../js/auth.js"></script>
     <script src="../js/api.js"></script>
