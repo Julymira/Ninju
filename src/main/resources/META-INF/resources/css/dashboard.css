@@ -50,3 +50,35 @@
     color: #6c757d;
     margin-top: 6px;
 }
+
+.navbar-profile-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+}
+
+.navbar-profile-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.profile-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 32px;
+    max-width: 480px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.profile-actions {
+    margin-top: 8px;
+}
+
+.optional {
+    font-size: 0.78rem;
+    color: #6c757d;
+    font-weight: 400;
+}

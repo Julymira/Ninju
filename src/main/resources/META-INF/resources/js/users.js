@@ -1,7 +1,5 @@
 requireAdmin();
-
-const user = getUser();
-document.getElementById('user-name').textContent = user.name;
+initNavbar();
 
 const alertEl   = document.getElementById('alert');
 const successEl = document.getElementById('alert-success');

@@ -50,6 +50,9 @@ public class AuthBO {
 
         auditLogDao.save("LOGIN_SUCESSO", user.getEmail());
 
-        return new LoginResponseDTO(token, user.getName(), user.getRole());
+        return new LoginResponseDTO(token, user.getId(), user.getName(), user.getEmail(), user.getRole(),
+                user.getAvatar(), user.getWeight(),
+                user.getCalorieMeta(), user.getCarbsMetaPct(),
+                user.getProteinMetaPct(), user.getFatMetaPct());
     }
 }

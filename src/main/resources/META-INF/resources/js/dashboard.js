@@ -1,4 +1,5 @@
-requireAuth();
+﻿requireAuth();
+initNavbar();
 
 const user = getUser();
 

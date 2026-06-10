@@ -23,9 +23,26 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // O perfil de acesso: "ADMIN" ou "USER"
     @Column(nullable = false, length = 20)
-    private String role; 
+    private String role;
+
+    @Column(length = 100)
+    private String avatar;
+
+    @Column
+    private Double weight;
+
+    @Column
+    private Integer calorieMeta;
+
+    @Column
+    private Integer carbsMetaPct;
+
+    @Column
+    private Integer proteinMetaPct;
+
+    @Column
+    private Integer fatMetaPct;
 
     public User() {
     }
@@ -55,11 +72,24 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public String getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = role;
-    }
-    
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
+
+    public String getAvatar() { return avatar; }
+    public void setAvatar(String avatar) { this.avatar = avatar; }
+
+    public Double getWeight() { return weight; }
+    public void setWeight(Double weight) { this.weight = weight; }
+
+    public Integer getCalorieMeta() { return calorieMeta; }
+    public void setCalorieMeta(Integer calorieMeta) { this.calorieMeta = calorieMeta; }
+
+    public Integer getCarbsMetaPct() { return carbsMetaPct; }
+    public void setCarbsMetaPct(Integer carbsMetaPct) { this.carbsMetaPct = carbsMetaPct; }
+
+    public Integer getProteinMetaPct() { return proteinMetaPct; }
+    public void setProteinMetaPct(Integer proteinMetaPct) { this.proteinMetaPct = proteinMetaPct; }
+
+    public Integer getFatMetaPct() { return fatMetaPct; }
+    public void setFatMetaPct(Integer fatMetaPct) { this.fatMetaPct = fatMetaPct; }
 }

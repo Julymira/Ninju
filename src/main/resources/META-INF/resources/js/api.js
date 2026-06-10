@@ -12,14 +12,18 @@ async function apiFetch(path, options = {}) {
         }
     });
 
-    if (response.status === 401) {
+    if (response.status === 401 && getToken() && !path.includes('/me/password')) {
         logout();
         return;
     }
 
     if (!response.ok) {
-        const error = await response.text();
-        throw new Error(error || `Erro ${response.status}`);
+        const text = await response.text();
+        let msg = `Erro ${response.status}`;
+        try { msg = JSON.parse(text).erro || msg; } catch { msg = text || msg; }
+        const err = new Error(msg);
+        err.status = response.status;
+        throw err;
     }
 
     const text = await response.text();
