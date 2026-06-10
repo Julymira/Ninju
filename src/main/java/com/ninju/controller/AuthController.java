@@ -1,8 +1,10 @@
 package com.ninju.controller;
 
 import com.ninju.bo.AuthBO;
+import com.ninju.bo.UserBO;
 import com.ninju.dto.LoginRequestDTO;
 import com.ninju.dto.LoginResponseDTO;
+import com.ninju.dto.UserRequestDTO;
 
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
@@ -22,6 +24,9 @@ public class AuthController {
     @Inject
     AuthBO authBO;
 
+    @Inject
+    UserBO userBO;
+
     @POST
     @Path("/login")
     @PermitAll
@@ -35,6 +40,22 @@ public class AuthController {
                     .build();
         } catch (SecurityException e) {
             return Response.status(Response.Status.UNAUTHORIZED)
+                    .entity(Map.of("erro", e.getMessage()))
+                    .build();
+        }
+    }
+
+    @POST
+    @Path("/register")
+    @PermitAll
+    public Response register(UserRequestDTO dto) {
+        try {
+            dto.role = "USER";
+            return Response.status(Response.Status.CREATED)
+                    .entity(userBO.create(dto, "self-register"))
+                    .build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
                     .entity(Map.of("erro", e.getMessage()))
                     .build();
         }

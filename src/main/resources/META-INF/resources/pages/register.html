@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninju - Cadastro</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+    <div class="login-box">
+        <div class="login-logo">
+            <h1>NINJU</h1>
+            <p>Crie sua conta</p>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="name">Nome</label>
+                <input type="text" id="name" class="form-control" placeholder="Seu nome completo" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" class="form-control" placeholder="••••••••" required minlength="6">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirmar senha</label>
+                <input type="password" id="confirmPassword" class="form-control" placeholder="••••••••" required minlength="6">
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+
+        <p class="register-link">Já tem conta? <a href="/">Entrar</a></p>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/register.js"></script>
+</body>
+</html>
