@@ -1,0 +1,230 @@
+/* ── Abas ── */
+.workout-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 20px;
+    gap: 0;
+}
+
+.workout-tab {
+    background: none;
+    border: none;
+    padding: 10px 22px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.workout-tab:hover { color: var(--text); }
+.workout-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+.workout-tab-content { display: none; }
+.workout-tab-content.active { display: block; }
+
+.tab-subtitle {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* ── Grid de planos ── */
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 4px;
+}
+
+.plan-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.plan-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.plan-card-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+}
+
+.plan-card-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.plan-card-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.plan-ex-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.plan-ex-item {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.plan-ex-item::before {
+    content: '•';
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.plan-ex-more {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.plan-empty-state {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding: 32px 0;
+    text-align: center;
+    grid-column: 1 / -1;
+}
+
+.btn-open-plan {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 0.83rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+.btn-open-plan:hover { background: var(--primary-dark, #218838); }
+
+/* ── Modal largo ── */
+.modal-lg { max-width: 580px; }
+
+/* ── Lista de exercícios no builder ── */
+.builder-ex-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+}
+
+.builder-ex-row:last-child { border-bottom: none; }
+
+.builder-ex-name { flex: 1; font-weight: 500; }
+.builder-ex-detail { color: var(--text-muted); white-space: nowrap; }
+.builder-ex-cal { color: var(--primary); font-weight: 600; min-width: 64px; text-align: right; }
+
+.builder-empty {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    padding: 20px 0;
+}
+
+/* ── Badges de tipo de exercício ── */
+.ex-type-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 2px 7px;
+}
+
+.ex-type-badge.musculacao {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.ex-type-badge.tempo {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+/* ── Container de scroll dos resultados ── */
+#exResults {
+    max-height: 260px;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-top: 4px;
+}
+
+/* ── Lista de resultados de exercícios no picker ── */
+.ex-result-item {
+    padding: 10px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background 0.12s;
+    border-bottom: 1px solid var(--border);
+}
+
+.ex-result-item:last-child { border-bottom: none; }
+
+.ex-result-item:hover { background: var(--hover-bg, rgba(0,0,0,0.04)); }
+
+.ex-result-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 3px;
+}
+
+.ex-result-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+}
+
+.ex-result-sub {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+/* ── Botão outline ── */
+.btn-outline {
+    background: none;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.btn-outline:hover { background: var(--primary); color: #fff; }

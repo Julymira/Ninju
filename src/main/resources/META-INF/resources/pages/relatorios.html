@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninju - Relatórios</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/relatorios.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="dashboard.html" class="navbar-brand">NINJU</a>
+        <ul class="navbar-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="daily-log.html">Diário</a></li>
+            <li><a href="relatorios.html" class="active">Relatórios</a></li>
+            <li id="nav-users" style="display:none"><a href="users.html">Usuários</a></li>
+        </ul>
+        <div class="navbar-user">
+            <button class="avatar-btn" id="avatarBtn" onclick="toggleDropdown()">
+                <img id="navAvatar" src="../images/avatars/default.svg" alt="avatar">
+            </button>
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="dropdown-header">
+                    <img class="dropdown-avatar" id="dropdownAvatar" src="../images/avatars/default.svg" alt="avatar">
+                    <div>
+                        <div class="dropdown-username" id="dropdownName"></div>
+                        <div class="dropdown-role" id="dropdownRole"></div>
+                    </div>
+                </div>
+                <div class="dropdown-menu">
+                    <a href="profile.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                        Meu Perfil
+                    </a>
+                    <a href="foods.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                        Alimentos
+                    </a>
+                    <a href="workouts.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 5v14M18 5v14M2 9h4M18 9h4M2 15h4M18 15h4"/></svg>
+                        Treinos
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item dropdown-item-danger" onclick="logout()">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Navegação de data -->
+        <div class="report-nav">
+            <button class="report-nav-btn" id="btnPrev" onclick="changeDay(-1)">&#8249;</button>
+            <span class="report-nav-date" id="reportDateLabel"></span>
+            <button class="report-nav-btn" id="btnNext" onclick="changeDay(1)">&#8250;</button>
+        </div>
+
+        <!-- Abas -->
+        <div class="report-tabs">
+            <button class="report-tab active" data-tab="calorias">CALORIAS</button>
+            <button class="report-tab" data-tab="macros">MACROS</button>
+        </div>
+
+        <!-- ── ABA CALORIAS ── -->
+        <div class="report-tab-content active" id="tab-calorias">
+
+            <div class="report-card">
+                <div class="cal-summary">
+                    <div class="cal-donut-wrap">
+                        <canvas id="donutCanvas" width="180" height="180"></canvas>
+                        <div class="cal-donut-center">
+                            <span class="cal-total" id="calTotal">0</span>
+                            <span class="cal-unit">kcal</span>
+                        </div>
+                    </div>
+                    <div class="cal-info">
+                        <p class="cal-pct" id="calPct">0% da meta</p>
+                        <p class="cal-meta" id="calMeta"></p>
+                        <a href="profile.html#metas" class="btn-link" style="font-size:0.8rem">Definir meta</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Refeições -->
+            <div class="meals-list" id="mealsList"></div>
+
+            <!-- Atividade física -->
+            <div id="activitySection"></div>
+
+            <!-- Saldo calórico do dia -->
+            <div class="report-card saldo-card" id="saldoCard" style="display:none">
+                <p class="saldo-title">Saldo do Dia</p>
+                <div class="saldo-row">
+                    <span>Consumidas</span>
+                    <span id="saldoConsumidas" class="saldo-consumed">0 kcal</span>
+                </div>
+                <div class="saldo-row">
+                    <span>Queimadas (treinos)</span>
+                    <span id="saldoQueimadas" class="saldo-burned">0 kcal</span>
+                </div>
+                <div class="saldo-divider"></div>
+                <div class="saldo-row saldo-net-row">
+                    <span>Saldo Líquido</span>
+                    <strong id="saldoLiquido" class="saldo-net">0 kcal</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ── ABA MACROS ── -->
+        <div class="report-tab-content" id="tab-macros">
+            <div class="report-card macros-card">
+                <div class="macro-bars" id="macroBars"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/relatorios.js"></script>
+</body>
+</html>

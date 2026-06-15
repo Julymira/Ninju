@@ -7,13 +7,15 @@ public class FoodDTO {
     public Double protein;
     public Double carbohydrates;
     public Double fat;
+    public Long ownerId; // null = global; preenchido = pessoal do usuário
 
-    public FoodDTO(Long id, String name, Integer calories, Double protein, Double carbohydrates, Double fat) {
+    public FoodDTO(Long id, String name, Integer calories, Double protein, Double carbohydrates, Double fat, Long ownerId) {
         this.id = id;
         this.name = name;
         this.calories = calories;
         this.protein = protein;
         this.carbohydrates = carbohydrates;
         this.fat = fat;
+        this.ownerId = ownerId;
     }
 }

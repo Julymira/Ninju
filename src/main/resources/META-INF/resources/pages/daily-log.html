@@ -1,10 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ninju - Diário do Dia</title>
+    <title>Ninju - Diário</title>
     <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/daily-log.css">
 </head>
 <body>
     <nav class="navbar">
@@ -12,8 +14,7 @@
         <ul class="navbar-links">
             <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="daily-log.html" class="active">Diário</a></li>
-            <li><a href="foods.html">Alimentos</a></li>
-            <li><a href="workouts.html">Treinos</a></li>
+            <li><a href="relatorios.html">Relatórios</a></li>
             <li id="nav-users" style="display:none"><a href="users.html">Usuários</a></li>
         </ul>
         <div class="navbar-user">
@@ -33,6 +34,14 @@
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
                         Meu Perfil
                     </a>
+                    <a href="foods.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                        Alimentos
+                    </a>
+                    <a href="workouts.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 5v14M18 5v14M2 9h4M18 9h4M2 15h4M18 15h4"/></svg>
+                        Treinos
+                    </a>
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item dropdown-item-danger" onclick="logout()">
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -43,63 +52,180 @@
         </div>
     </nav>
 
-    <div class="container">
-        <h1 class="page-title">📓 Diário do Dia</h1>
+    <div class="container diary-container">
 
-        <div id="alert" class="alert alert-error"></div>
-        <div id="alert-success" class="alert alert-success"></div>
+        <!-- Navegação de dia -->
+        <div class="diary-nav">
+            <button class="diary-nav-btn" id="btnPrev" onclick="changeDay(-1)">&#8249;</button>
+            <span class="diary-nav-label" id="dayLabel">Hoje</span>
+            <button class="diary-nav-btn" id="btnNext" onclick="changeDay(1)">&#8250;</button>
+        </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <!-- Mini semana -->
+        <div class="week-strip" id="weekStrip"></div>
 
-            <!-- Caso de uso 1: Registrar Refeição -->
-            <div class="card">
-                <div class="card-title">🥗 Registrar Refeição</div>
-                <form id="form-refeicao">
-                    <div class="form-group">
-                        <label for="data-refeicao">Data</label>
-                        <input type="date" id="data-refeicao" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="notas-refeicao">O que você comeu?</label>
-                        <textarea id="notas-refeicao" class="form-control" placeholder="Ex: Café da manhã: aveia + banana. Almoço: arroz, feijão, frango..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Salvar Refeição</button>
-                </form>
+        <!-- Abas do diário -->
+        <div class="diary-tabs">
+            <button class="diary-tab active" data-tab="alimentar" onclick="switchDiaryTab('alimentar')">🥗 Acompanhamento Alimentar</button>
+            <button class="diary-tab" data-tab="fisico" onclick="switchDiaryTab('fisico')">🏋️ Acompanhamento Físico</button>
+        </div>
+
+        <div id="alert-diary" class="alert"></div>
+
+        <!-- ── ABA: ALIMENTAR ── -->
+        <div id="tab-alimentar" class="diary-tab-content active">
+
+            <!-- Barra de calorias -->
+            <div class="cal-bar">
+                <div class="cal-bar-item">
+                    <span class="cal-bar-val" id="calRestantes">—</span>
+                    <span class="cal-bar-lbl">Restantes</span>
+                </div>
+                <div class="cal-bar-eq">=</div>
+                <div class="cal-bar-item">
+                    <span class="cal-bar-val" id="calMeta">—</span>
+                    <span class="cal-bar-lbl">Meta</span>
+                </div>
+                <div class="cal-bar-eq">−</div>
+                <div class="cal-bar-item">
+                    <span class="cal-bar-val" id="calConsumidas">0</span>
+                    <span class="cal-bar-lbl">Consumidas</span>
+                </div>
             </div>
 
-            <!-- Caso de uso 2: Registrar Treino -->
-            <div class="card">
-                <div class="card-title">🏋️ Registrar Treino</div>
-                <form id="form-treino">
-                    <div class="form-group">
-                        <label for="data-treino">Data</label>
-                        <input type="date" id="data-treino" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="notas-treino">O que você treinou?</label>
-                        <textarea id="notas-treino" class="form-control" placeholder="Ex: Corrida 30 min + musculação peito e tríceps..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Salvar Treino</button>
-                </form>
+            <!-- Refeições -->
+            <div class="meal-section">
+                <div class="meal-section-header" onclick="toggleMeal('CAFE')">
+                    <span class="meal-icon">🌅</span>
+                    <span class="meal-title">Café da Manhã</span>
+                    <span class="meal-kcal" id="kcal-CAFE">0 kcal</span>
+                    <button class="meal-add-btn" onclick="event.stopPropagation(); openAddModal('CAFE')">+</button>
+                </div>
+                <div class="meal-items" id="items-CAFE"></div>
+            </div>
+
+            <div class="meal-section">
+                <div class="meal-section-header" onclick="toggleMeal('ALMOCO')">
+                    <span class="meal-icon">☀️</span>
+                    <span class="meal-title">Almoço</span>
+                    <span class="meal-kcal" id="kcal-ALMOCO">0 kcal</span>
+                    <button class="meal-add-btn" onclick="event.stopPropagation(); openAddModal('ALMOCO')">+</button>
+                </div>
+                <div class="meal-items" id="items-ALMOCO"></div>
+            </div>
+
+            <div class="meal-section">
+                <div class="meal-section-header" onclick="toggleMeal('JANTAR')">
+                    <span class="meal-icon">🌆</span>
+                    <span class="meal-title">Jantar</span>
+                    <span class="meal-kcal" id="kcal-JANTAR">0 kcal</span>
+                    <button class="meal-add-btn" onclick="event.stopPropagation(); openAddModal('JANTAR')">+</button>
+                </div>
+                <div class="meal-items" id="items-JANTAR"></div>
+            </div>
+
+            <div class="meal-section">
+                <div class="meal-section-header" onclick="toggleMeal('LANCHE')">
+                    <span class="meal-icon">🌙</span>
+                    <span class="meal-title">Lanches/Outros</span>
+                    <span class="meal-kcal" id="kcal-LANCHE">0 kcal</span>
+                    <button class="meal-add-btn" onclick="event.stopPropagation(); openAddModal('LANCHE')">+</button>
+                </div>
+                <div class="meal-items" id="items-LANCHE"></div>
+            </div>
+
+            <!-- Resumo alimentar -->
+            <div class="diary-summary">
+                <p class="diary-summary-title">Resumo</p>
+                <div class="diary-summary-row">
+                    <span>Calorias Restantes</span>
+                    <strong id="sumRestantes">—</strong>
+                </div>
+                <div class="diary-summary-row">
+                    <span>Calorias Consumidas</span>
+                    <strong id="sumConsumidas">0</strong>
+                </div>
+                <div class="diary-summary-pct" id="sumPct">0% da IDR</div>
             </div>
         </div>
 
-        <!-- Histórico -->
-        <div class="card">
-            <div class="card-title">📅 Histórico</div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Refeições</th>
-                            <th>Treino</th>
-                        </tr>
-                    </thead>
-                    <tbody id="logs-body">
-                        <tr><td colspan="3" class="empty-state">Carregando...</td></tr>
-                    </tbody>
-                </table>
+        <!-- ── ABA: FÍSICO ── -->
+        <div id="tab-fisico" class="diary-tab-content">
+
+            <div class="fisico-header">
+                <p class="fisico-subtitle">Treinos realizados hoje</p>
+                <button class="btn btn-primary btn-sm" onclick="openLogWorkoutModal()">+ Registrar Treino</button>
+            </div>
+
+            <div id="workoutLogsList">
+                <div class="wlog-empty">Nenhum treino registrado para este dia.</div>
+            </div>
+
+            <!-- Resumo físico -->
+            <div class="diary-summary" id="wlogSummary" style="display:none">
+                <p class="diary-summary-title">Resumo Físico</p>
+                <div class="diary-summary-row">
+                    <span>Calorias Queimadas (estimado)</span>
+                    <strong id="sumCalQueimadas">0</strong>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal: adicionar alimento -->
+    <div class="modal-overlay" id="addFoodModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title" id="addModalTitle">Adicionar Alimento</span>
+                <button class="modal-close" onclick="closeAddModal()">&times;</button>
+            </div>
+            <div class="form-group">
+                <input type="text" id="foodSearch" class="form-control" placeholder="Buscar alimento..." oninput="searchFoods()">
+            </div>
+            <div id="foodResults" class="food-results"></div>
+            <div id="addFoodForm" style="display:none">
+                <div class="selected-food-info" id="selectedFoodInfo"></div>
+                <div class="form-group" style="margin-top:12px">
+                    <label>Quantidade (g)</label>
+                    <input type="number" id="foodQty" class="form-control" min="1" value="100">
+                </div>
+                <div id="nutritionPreview" class="nutrition-preview"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeAddModal()">Cancelar</button>
+                <button class="btn btn-primary" id="confirmAddBtn" style="display:none" onclick="confirmAdd()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: registrar treino -->
+    <div class="modal-overlay" id="logWorkoutModal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <span class="modal-title" id="logWorkoutTitle">Registrar Treino</span>
+                <button class="modal-close" onclick="closeLogWorkoutModal()">&times;</button>
+            </div>
+            <div id="alert-log-workout" class="alert" style="margin-bottom:10px"></div>
+
+            <!-- Passo 1: selecionar plano -->
+            <div id="wlogStep1">
+                <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px">Selecione um dos seus treinos:</p>
+                <div id="wlogPlanList"></div>
+            </div>
+
+            <!-- Passo 2: revisar / ajustar exercícios -->
+            <div id="wlogStep2" style="display:none">
+                <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px">
+                    Ajuste os valores se necessário — esses ajustes valem só para o registro de hoje.
+                </p>
+                <div id="wlogExercises"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="wlogBtnBack" style="display:none" onclick="wlogGoBack()">Voltar</button>
+                <button class="btn btn-secondary" onclick="closeLogWorkoutModal()">Cancelar</button>
+                <button class="btn btn-primary" id="wlogBtnConfirm" style="display:none" onclick="confirmLogWorkout()">Registrar</button>
             </div>
         </div>
     </div>

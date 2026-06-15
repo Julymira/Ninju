@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "foods")
@@ -29,6 +31,10 @@ public class Food {
 
     @Column(nullable = false)
     private Double fat; // Gorduras em gramas
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner; // null = alimento global (admin); preenchido = alimento pessoal do usuário
 
     public Food() {}
 
@@ -68,6 +74,12 @@ public class Food {
     }
     public void setFat(Double fat) {
         this.fat = fat;
+    }
+    public User getOwner() {
+        return owner;
+    }
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
 }

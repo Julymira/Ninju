@@ -1,0 +1,335 @@
+/* ── Navegação de data ── */
+.report-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 16px;
+}
+
+.report-nav-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--text);
+    line-height: 1;
+    transition: background 0.15s;
+}
+
+.report-nav-btn:hover:not(:disabled) { background: #e9ecef; }
+.report-nav-btn:disabled { opacity: 0.35; cursor: default; }
+
+.report-nav-date {
+    font-size: 1rem;
+    font-weight: 600;
+    min-width: 160px;
+    text-align: center;
+}
+
+/* ── Abas ── */
+.report-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 20px;
+    gap: 0;
+}
+
+.report-tab {
+    background: none;
+    border: none;
+    padding: 10px 22px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.report-tab:hover { color: var(--text); }
+.report-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+.report-tab-content { display: none; }
+.report-tab-content.active { display: block; }
+
+/* ── Cards ── */
+.report-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 14px;
+}
+
+/* ── Calorias summary ── */
+.cal-summary {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.cal-donut-wrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.cal-donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.cal-total {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+}
+
+.cal-unit {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.cal-info { flex: 1; }
+
+.cal-pct {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 4px;
+}
+
+.cal-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+/* ── Meal cards ── */
+.meal-card { padding: 14px 18px; }
+
+.meal-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.meal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.meal-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    flex: 1;
+    color: var(--text);
+}
+
+.meal-pct {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.meal-cal-total {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 70px;
+    text-align: right;
+}
+
+.meal-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    border-top: 1px solid var(--border);
+    font-size: 0.87rem;
+}
+
+.meal-item-name { flex: 1; color: var(--text); }
+.meal-item-qty  { color: var(--text-muted); min-width: 42px; text-align: right; }
+.meal-item-cal  { color: var(--text-muted); min-width: 64px; text-align: right; }
+
+/* ── Atividade física — empty state ── */
+.activity-empty {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+}
+
+.activity-empty-icon { font-size: 1.8rem; flex-shrink: 0; }
+
+.activity-empty-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 3px;
+    color: var(--text);
+}
+
+.activity-empty-sub {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.activity-empty-sub a { color: var(--primary); }
+
+/* ── Atividade física — header card ── */
+.activity-header-card { padding: 14px 18px; }
+
+.activity-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.activity-header-icon { font-size: 1.2rem; }
+
+.activity-header-title {
+    flex: 1;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+}
+
+.activity-header-total {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #e65100;
+}
+
+/* ── Workout log cards no relatório ── */
+.workout-log-card { padding: 14px 18px; }
+
+.wlog-report-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.wlog-report-name {
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--text);
+}
+
+.wlog-report-cal {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #e65100;
+}
+
+.wlog-report-ex {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+}
+
+.wlog-report-ex-name { flex: 1; color: var(--text); display: flex; align-items: center; gap: 6px; }
+.wlog-report-ex-detail { color: var(--text-muted); white-space: nowrap; }
+.wlog-report-ex-cal { color: #e65100; font-weight: 600; min-width: 64px; text-align: right; }
+
+/* ── Badges de tipo ── */
+.ex-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 1px 6px;
+    flex-shrink: 0;
+}
+.ex-badge.musc  { background: #fff3e0; color: #e65100; }
+.ex-badge.tempo { background: #e3f2fd; color: #1565c0; }
+
+/* ── Saldo calórico ── */
+.saldo-card { padding: 18px 20px; }
+
+.saldo-title {
+    font-weight: 700;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.saldo-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.saldo-consumed { color: #3b82f6; font-weight: 600; }
+.saldo-burned   { color: #28a745; font-weight: 600; }
+
+.saldo-divider {
+    border-top: 1px solid var(--border);
+    margin: 6px 0;
+}
+
+.saldo-net-row { padding-top: 8px; font-weight: 600; }
+.saldo-net { font-size: 1rem; }
+
+/* ── Macros ── */
+.macros-card { padding: 24px; }
+
+.macro-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.macro-bar-label {
+    width: 110px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+    flex-shrink: 0;
+}
+
+.macro-bar-track {
+    flex: 1;
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.macro-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+}
+
+.macro-bar-value {
+    width: 52px;
+    text-align: right;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}

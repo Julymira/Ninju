@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -13,8 +13,7 @@
         <ul class="navbar-links">
             <li><a href="dashboard.html" class="active">Dashboard</a></li>
             <li><a href="daily-log.html">Diário</a></li>
-            <li><a href="foods.html">Alimentos</a></li>
-            <li><a href="workouts.html">Treinos</a></li>
+            <li><a href="relatorios.html">Relatórios</a></li>
             <li id="nav-users" style="display:none"><a href="users.html">Usuários</a></li>
         </ul>
         <div class="navbar-user">
@@ -34,6 +33,14 @@
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
                         Meu Perfil
                     </a>
+                    <a href="foods.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                        Alimentos
+                    </a>
+                    <a href="workouts.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 5v14M18 5v14M2 9h4M18 9h4M2 15h4M18 15h4"/></svg>
+                        Treinos
+                    </a>
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item dropdown-item-danger" onclick="logout()">
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -45,33 +52,135 @@
     </nav>
 
     <div class="container">
-        <div class="welcome">
-            <h2>Olá, <span id="welcome-name"></span>!</h2>
-            <p>O que vamos fazer hoje?</p>
+
+        <!-- Header -->
+        <div class="dash-header">
+            <div class="dash-header-text">
+                <h2>Olá, <span id="welcome-name"></span>! 👋</h2>
+                <p id="dash-date" class="dash-date"></p>
+            </div>
+            <a href="daily-log.html" class="btn btn-primary dash-cta">+ Registrar no Diário</a>
         </div>
 
-        <div class="cards-grid" id="cards-grid">
-            <a href="daily-log.html" class="nav-card">
-                <div class="icon">📓</div>
-                <h3>Diário do Dia</h3>
-                <p>Registre suas refeições e treinos</p>
+        <!-- Estatísticas do dia -->
+        <div class="dash-stats">
+            <div class="stat-card stat-calories">
+                <div class="stat-top">
+                    <span class="stat-icon">🔥</span>
+                    <span class="stat-label">Calorias Consumidas</span>
+                </div>
+                <div class="stat-val" id="statConsumed">—</div>
+                <div class="stat-progress-wrap">
+                    <div class="stat-progress-bar">
+                        <div class="stat-progress-fill" id="statBar" style="width:0%"></div>
+                    </div>
+                    <span class="stat-progress-label" id="statMetaLabel">Meta não definida</span>
+                </div>
+            </div>
+
+            <div class="stat-card stat-burned">
+                <div class="stat-top">
+                    <span class="stat-icon">💪</span>
+                    <span class="stat-label">Kcal Queimadas</span>
+                </div>
+                <div class="stat-val" id="statBurned">—</div>
+                <div class="stat-sub" id="statWorkoutCount">0 treino(s) registrado(s)</div>
+            </div>
+
+            <div class="stat-card stat-net">
+                <div class="stat-top">
+                    <span class="stat-icon">⚖️</span>
+                    <span class="stat-label">Saldo Líquido</span>
+                </div>
+                <div class="stat-val" id="statNet">—</div>
+                <div class="stat-sub">consumidas − queimadas</div>
+            </div>
+        </div>
+
+        <!-- Macros do dia -->
+        <div class="dash-card dash-macros-card">
+            <div class="dash-card-title">Macros de Hoje</div>
+            <div class="dash-macros" id="dashMacros">
+                <div class="dash-macro-item">
+                    <span class="macro-label">Proteínas</span>
+                    <div class="macro-track"><div class="macro-fill prot" id="macroProt" style="width:0%"></div></div>
+                    <span class="macro-val" id="macroProtVal">0g</span>
+                </div>
+                <div class="dash-macro-item">
+                    <span class="macro-label">Carboidratos</span>
+                    <div class="macro-track"><div class="macro-fill carb" id="macroCarb" style="width:0%"></div></div>
+                    <span class="macro-val" id="macroCarbVal">0g</span>
+                </div>
+                <div class="dash-macro-item">
+                    <span class="macro-label">Gorduras</span>
+                    <div class="macro-track"><div class="macro-fill fat" id="macroFat" style="width:0%"></div></div>
+                    <span class="macro-val" id="macroFatVal">0g</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Relatório do dia -->
+        <div class="dash-report">
+
+            <!-- Alimentação -->
+            <div class="dash-card">
+                <div class="dash-card-title">
+                    🥗 Alimentação de Hoje
+                    <a href="daily-log.html" class="dash-card-link">Ver tudo</a>
+                </div>
+                <div id="dashMeals"></div>
+            </div>
+
+            <!-- Atividade -->
+            <div class="dash-card">
+                <div class="dash-card-title">
+                    🏋️ Atividade Física de Hoje
+                    <a href="daily-log.html#fisico" class="dash-card-link">Registrar</a>
+                </div>
+                <div id="dashActivity"></div>
+            </div>
+
+        </div>
+
+        <!-- Atalhos rápidos -->
+        <div class="dash-shortcuts">
+            <a href="daily-log.html" class="shortcut-card">
+                <span class="shortcut-icon">📓</span>
+                <div>
+                    <div class="shortcut-title">Diário</div>
+                    <div class="shortcut-sub">Registre refeições e treinos</div>
+                </div>
             </a>
-            <a href="foods.html" class="nav-card">
-                <div class="icon">🥗</div>
-                <h3>Alimentos</h3>
-                <p>Tabela nutricional de alimentos</p>
+            <a href="relatorios.html" class="shortcut-card">
+                <span class="shortcut-icon">📊</span>
+                <div>
+                    <div class="shortcut-title">Relatórios</div>
+                    <div class="shortcut-sub">Calorias e macros detalhados</div>
+                </div>
             </a>
-            <a href="workouts.html" class="nav-card">
-                <div class="icon">🏋️</div>
-                <h3>Treinos</h3>
-                <p>Catálogo de exercícios</p>
+            <a href="foods.html" class="shortcut-card">
+                <span class="shortcut-icon">🥗</span>
+                <div>
+                    <div class="shortcut-title">Alimentos</div>
+                    <div class="shortcut-sub">Tabela nutricional</div>
+                </div>
             </a>
-            <a href="users.html" class="nav-card" id="card-users" style="display:none">
-                <div class="icon">👥</div>
-                <h3>Usuários</h3>
-                <p>Gerenciar usuários do sistema</p>
+            <a href="workouts.html" class="shortcut-card">
+                <span class="shortcut-icon">🏋️</span>
+                <div>
+                    <div class="shortcut-title">Treinos</div>
+                    <div class="shortcut-sub">Catálogo e planos</div>
+                </div>
+            </a>
+            <a href="users.html" class="shortcut-card" id="card-users" style="display:none">
+                <span class="shortcut-icon">👥</span>
+                <div>
+                    <div class="shortcut-title">Usuários</div>
+                    <div class="shortcut-sub">Gerenciar usuários</div>
+                </div>
             </a>
         </div>
+
     </div>
 
     <script src="../js/auth.js"></script>

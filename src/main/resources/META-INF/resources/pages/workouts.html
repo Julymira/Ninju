@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ninju - Treinos</title>
     <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/workouts.css">
 </head>
 <body>
     <nav class="navbar">
@@ -12,8 +13,7 @@
         <ul class="navbar-links">
             <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="daily-log.html">Diário</a></li>
-            <li><a href="foods.html">Alimentos</a></li>
-            <li><a href="workouts.html" class="active">Treinos</a></li>
+            <li><a href="relatorios.html">Relatórios</a></li>
             <li id="nav-users" style="display:none"><a href="users.html">Usuários</a></li>
         </ul>
         <div class="navbar-user">
@@ -33,6 +33,14 @@
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
                         Meu Perfil
                     </a>
+                    <a href="foods.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                        Alimentos
+                    </a>
+                    <a href="workouts.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 5v14M18 5v14M2 9h4M18 9h4M2 15h4M18 15h4"/></svg>
+                        Treinos
+                    </a>
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item dropdown-item-danger" onclick="logout()">
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -44,24 +52,169 @@
     </nav>
 
     <div class="container">
-        <h1 class="page-title">🏋️ Treinos</h1>
 
-        <div id="alert" class="alert alert-error"></div>
+        <!-- Abas -->
+        <div class="workout-tabs">
+            <button class="workout-tab active" data-tab="plans" onclick="switchTab('plans')">🏋️ Meus Treinos</button>
+            <button class="workout-tab" data-tab="catalog" onclick="switchTab('catalog')">📋 Catálogo de Exercícios</button>
+        </div>
 
-        <div class="card">
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Exercício</th>
-                            <th>Categoria</th>
-                            <th>Calorias Estimadas (kcal)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="workouts-body">
-                        <tr><td colspan="3" class="empty-state">Carregando...</td></tr>
-                    </tbody>
-                </table>
+        <div id="alert-workouts" class="alert"></div>
+
+        <!-- ── ABA: MEUS TREINOS ── -->
+        <div id="tab-plans" class="workout-tab-content active">
+            <div class="page-header">
+                <p class="tab-subtitle">Seus treinos personalizados (máx. 7)</p>
+                <button class="btn btn-primary" id="btnNewPlan" onclick="openNewPlanModal()">+ Novo Treino</button>
+            </div>
+            <div class="plans-grid" id="plansGrid">
+                <div class="plan-empty-state">Carregando...</div>
+            </div>
+        </div>
+
+        <!-- ── ABA: CATÁLOGO ── -->
+        <div id="tab-catalog" class="workout-tab-content">
+            <div class="page-header">
+                <p class="tab-subtitle">Exercícios disponíveis para montar seus treinos</p>
+                <button class="btn btn-primary" onclick="openAddExerciseModal()">+ Adicionar Exercício</button>
+            </div>
+            <div class="card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Exercício</th>
+                                <th>Categoria</th>
+                                <th>Tipo</th>
+                                <th>Fator Calórico</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="catalog-body">
+                            <tr><td colspan="5" class="empty-state">Carregando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Novo plano -->
+    <div class="modal-overlay" id="newPlanModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Novo Treino</span>
+                <button class="modal-close" onclick="closeNewPlanModal()">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Nome do treino *</label>
+                <input type="text" id="newPlanName" class="form-control" placeholder="Ex: Treino A – Peito e Tríceps">
+            </div>
+            <div id="alert-new-plan" class="alert" style="margin-top:8px"></div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeNewPlanModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="createPlan()">Criar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Builder do plano -->
+    <div class="modal-overlay" id="planBuilderModal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <span class="modal-title" id="builderTitle">Editar Treino</span>
+                <button class="modal-close" onclick="closePlanBuilder()">&times;</button>
+            </div>
+            <div id="alert-builder" class="alert" style="margin-bottom:12px"></div>
+            <div id="planExercises"></div>
+            <button class="btn btn-outline" style="margin-top:12px;width:100%" onclick="openPickExercise()">+ Adicionar Exercício</button>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closePlanBuilder()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Selecionar exercício para o plano -->
+    <div class="modal-overlay" id="pickExerciseModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Adicionar Exercício ao Treino</span>
+                <button class="modal-close" onclick="closePickExercise()">&times;</button>
+            </div>
+            <div class="form-group">
+                <input type="text" id="exSearch" class="form-control" placeholder="Buscar exercício..." oninput="searchExercises()">
+            </div>
+            <div id="exResults" class="food-results"></div>
+            <div id="exForm" style="display:none">
+                <div class="selected-food-info" id="exSelectedInfo"></div>
+                <!-- Campos musculação -->
+                <div id="exFieldsMusculacao" style="display:none;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px">
+                    <div class="form-group">
+                        <label>Séries *</label>
+                        <input type="number" id="exSets" class="form-control" min="1" value="3" oninput="updateExPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label>Reps *</label>
+                        <input type="number" id="exReps" class="form-control" min="1" value="10" oninput="updateExPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label>Carga (kg) *</label>
+                        <input type="number" id="exWeight" class="form-control" min="0" step="0.5" placeholder="Ex: 60" oninput="updateExPreview()">
+                    </div>
+                </div>
+                <!-- Campos tempo -->
+                <div id="exFieldsTempo" style="display:none;margin-top:12px">
+                    <div class="form-group">
+                        <label>Duração (minutos) *</label>
+                        <input type="number" id="exDuration" class="form-control" min="1" step="1" placeholder="Ex: 30" oninput="updateExPreview()">
+                    </div>
+                </div>
+                <div id="exPreview" class="nutrition-preview" style="margin-top:8px"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closePickExercise()">Cancelar</button>
+                <button class="btn btn-primary" id="confirmExBtn" style="display:none" onclick="confirmAddExercise()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Adicionar ao catálogo -->
+    <div class="modal-overlay" id="addExerciseModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Adicionar Exercício ao Catálogo</span>
+                <button class="modal-close" onclick="closeAddExerciseModal()">&times;</button>
+            </div>
+            <div id="alert-ex-modal" class="alert" style="margin-bottom:12px"></div>
+            <div class="form-group">
+                <label>Nome *</label>
+                <input type="text" id="exCatName" class="form-control" placeholder="Ex: Supino Reto">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div class="form-group">
+                    <label>Categoria *</label>
+                    <input type="text" id="exCatCategory" class="form-control" placeholder="Ex: Musculação">
+                </div>
+                <div class="form-group">
+                    <label>Tipo *</label>
+                    <select id="exCatType" class="form-control" onchange="updateCatalogFactorLabel()">
+                        <option value="MUSCULACAO">Musculação (séries × reps × kg)</option>
+                        <option value="TEMPO">Tempo / Aeróbico (por minuto)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label id="exCatFactorLabel">kcal por repetição por kg *</label>
+                <input type="number" id="exCatCal" class="form-control" min="0" step="0.00001" placeholder="Ex: 0.01125">
+            </div>
+            <div id="admin-ex-global-opt" style="display:none" class="form-group">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:500">
+                    <input type="checkbox" id="exCatGlobal"> Adicionar para todos os usuários (global)
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeAddExerciseModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveExercise()">Salvar</button>
             </div>
         </div>
     </div>
