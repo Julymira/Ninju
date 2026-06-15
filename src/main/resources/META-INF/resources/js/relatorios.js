@@ -1,7 +1,10 @@
 requireAuth();
 initNavbar();
 
-if (isAdmin()) document.getElementById('nav-users').style.display = 'block';
+if (isAdmin()) {
+    document.getElementById('nav-users').style.display = 'block';
+    document.getElementById('nav-logs').style.display = 'block';
+}
 
 const MEAL_LABELS = { CAFE: 'Café da Manhã', ALMOCO: 'Almoço', JANTAR: 'Jantar', LANCHE: 'Lanches/Outros' };
 const MEAL_COLORS = { CAFE: '#f59e0b', ALMOCO: '#3b82f6', JANTAR: '#f97316', LANCHE: '#a855f7' };

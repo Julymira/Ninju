@@ -1,6 +1,9 @@
 requireAdmin();
 initNavbar();
 
+document.getElementById('nav-users').style.display = 'block';
+document.getElementById('nav-logs').style.display = 'block';
+
 const alertEl   = document.getElementById('alert');
 const successEl = document.getElementById('alert-success');
 const tbody     = document.getElementById('users-body');

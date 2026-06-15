@@ -2,7 +2,10 @@ requireAuth();
 initNavbar();
 
 const user = getUser();
-if (isAdmin()) document.getElementById('nav-users').style.display = 'block';
+if (isAdmin()) {
+    document.getElementById('nav-users').style.display = 'block';
+    document.getElementById('nav-logs').style.display = 'block';
+}
 
 // ── Tabs ──────────────────────────────────────────────────────────────────
 document.querySelectorAll('.tab-btn').forEach(btn => {

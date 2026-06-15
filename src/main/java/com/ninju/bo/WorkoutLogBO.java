@@ -1,5 +1,6 @@
 package com.ninju.bo;
 
+import com.ninju.dao.AuditLogDao;
 import com.ninju.dao.UserDao;
 import com.ninju.dao.WorkoutDao;
 import com.ninju.dao.WorkoutLogDao;
@@ -23,8 +24,10 @@ public class WorkoutLogBO {
     @Inject WorkoutLogDao workoutLogDao;
     @Inject WorkoutDao workoutDao;
     @Inject UserDao userDao;
+    @Inject AuditLogDao auditLogDao;
 
-    public List<WorkoutLogDTO> listByDate(Long userId, LocalDate date) {
+    public List<WorkoutLogDTO> listByDate(Long userId, LocalDate date, String executedBy) {
+        auditLogDao.save("LISTAR_TREINOS_DIA: " + date, executedBy);
         return workoutLogDao.findByUserAndDate(userId, date)
             .stream().map(this::toDTO).collect(Collectors.toList());
     }
@@ -74,14 +77,16 @@ public class WorkoutLogBO {
         }
 
         workoutLogDao.save(log);
+        auditLogDao.save("REGISTRAR_TREINO_LOG: " + planName, log.getUser().getEmail());
         return toDTO(log);
     }
 
     @Transactional
-    public void delete(Long logId, Long userId) {
+    public void delete(Long logId, Long userId, String executedBy) {
         WorkoutLog log = workoutLogDao.findById(logId);
         if (log == null) throw new IllegalArgumentException("Registro não encontrado.");
         if (!log.getUser().getId().equals(userId)) throw new SecurityException("Acesso negado.");
+        auditLogDao.save("REMOVER_TREINO_LOG: " + logId, executedBy);
         workoutLogDao.delete(log);
     }
 

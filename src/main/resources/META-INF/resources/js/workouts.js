@@ -3,6 +3,7 @@ initNavbar();
 
 if (isAdmin()) {
     document.getElementById('nav-users').style.display = 'block';
+    document.getElementById('nav-logs').style.display = 'block';
     document.getElementById('admin-ex-global-opt').style.display = 'block';
 }
 

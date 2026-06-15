@@ -6,6 +6,7 @@ document.getElementById('welcome-name').textContent = user.name ? user.name.spli
 
 if (isAdmin()) {
     document.getElementById('nav-users').style.display  = 'block';
+    document.getElementById('nav-logs').style.display   = 'block';
     document.getElementById('card-users').style.display = 'flex';
 }
 

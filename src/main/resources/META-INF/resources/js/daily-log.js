@@ -1,7 +1,10 @@
 requireAuth();
 initNavbar();
 
-if (isAdmin()) document.getElementById('nav-users').style.display = 'block';
+if (isAdmin()) {
+    document.getElementById('nav-users').style.display = 'block';
+    document.getElementById('nav-logs').style.display = 'block';
+}
 
 const MAX_DAYS_BACK = 7;
 const DAY_LABELS = ['D','S','T','Q','Q','S','S'];

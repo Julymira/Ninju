@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninju - Logs do Sistema</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/logs.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="dashboard.html" class="navbar-brand">NINJU</a>
+        <ul class="navbar-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="daily-log.html">Diário</a></li>
+            <li><a href="relatorios.html">Relatórios</a></li>
+            <li id="nav-users" style="display:none"><a href="users.html">Usuários</a></li>
+            <li id="nav-logs" style="display:none"><a href="logs.html" class="active">Logs</a></li>
+        </ul>
+        <div class="navbar-user">
+            <button class="avatar-btn" id="avatarBtn" onclick="toggleDropdown()">
+                <img id="navAvatar" src="../images/avatars/default.svg" alt="avatar">
+            </button>
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="dropdown-header">
+                    <img class="dropdown-avatar" id="dropdownAvatar" src="../images/avatars/default.svg" alt="avatar">
+                    <div>
+                        <div class="dropdown-username" id="dropdownName"></div>
+                        <div class="dropdown-role" id="dropdownRole"></div>
+                    </div>
+                </div>
+                <div class="dropdown-menu">
+                    <a href="profile.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                        Meu Perfil
+                    </a>
+                    <a href="foods.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                        Alimentos
+                    </a>
+                    <a href="workouts.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 5v14M18 5v14M2 9h4M18 9h4M2 15h4M18 15h4"/></svg>
+                        Treinos
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item dropdown-item-danger" onclick="logout()">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="logs-header">
+            <div>
+                <h2 class="logs-title">Logs do Sistema</h2>
+                <p class="logs-sub">Registro de todas as ações executadas pelos usuários</p>
+            </div>
+        </div>
+
+        <div class="logs-table-wrap">
+            <table class="logs-table" id="logsTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Data / Hora</th>
+                        <th>Usuário</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="logsTbody">
+                    <tr><td colspan="4" class="logs-loading">Carregando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/logs.js"></script>
+</body>
+</html>

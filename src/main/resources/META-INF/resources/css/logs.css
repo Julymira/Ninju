@@ -1,0 +1,141 @@
+.logs-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.logs-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.logs-sub {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.logs-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logs-controls .form-control {
+    width: 260px;
+}
+
+.logs-info {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.logs-table-wrap {
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.logs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.logs-table thead tr {
+    background: var(--border);
+}
+
+.logs-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--text-muted);
+}
+
+.logs-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: middle;
+}
+
+.logs-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.logs-table tbody tr:hover {
+    background: var(--border);
+}
+
+.logs-id {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    width: 50px;
+}
+
+.logs-dt {
+    white-space: nowrap;
+    width: 140px;
+}
+
+.logs-date {
+    display: block;
+    font-weight: 600;
+}
+
+.logs-time {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.logs-user {
+    font-weight: 500;
+    width: 200px;
+    word-break: break-all;
+}
+
+.logs-loading {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 32px;
+    font-size: 0.88rem;
+}
+
+/* Badges de categoria */
+.logs-action-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.badge-auth    { background: #fef3c7; color: #92400e; }
+.badge-create  { background: #d1fae5; color: #065f46; }
+.badge-delete  { background: #fee2e2; color: #991b1b; }
+.badge-update  { background: #dbeafe; color: #1e40af; }
+.badge-read    { background: #f3f4f6; color: #6b7280; }
+.badge-other   { background: #ede9fe; color: #5b21b6; }
+
+@media (max-width: 768px) {
+    .logs-controls .form-control { width: 100%; }
+    .logs-controls { width: 100%; }
+    .logs-table { font-size: 0.78rem; }
+    .logs-table th, .logs-table td { padding: 8px 10px; }
+}

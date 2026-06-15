@@ -26,11 +26,15 @@ public class WorkoutLogController {
         return Long.parseLong(p.getClaim("userId").toString());
     }
 
+    private String email(SecurityContext sc) {
+        return sc.getUserPrincipal().getName();
+    }
+
     @GET
     public Response list(@QueryParam("date") String date, @Context SecurityContext sc) {
         try {
             LocalDate d = (date != null && !date.isBlank()) ? LocalDate.parse(date) : LocalDate.now();
-            return Response.ok(workoutLogBO.listByDate(userId(sc), d)).build();
+            return Response.ok(workoutLogBO.listByDate(userId(sc), d, email(sc))).build();
         } catch (Exception e) {
             return Response.serverError().entity(Map.of("message", e.getMessage())).build();
         }
@@ -51,7 +55,7 @@ public class WorkoutLogController {
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id, @Context SecurityContext sc) {
         try {
-            workoutLogBO.delete(id, userId(sc));
+            workoutLogBO.delete(id, userId(sc), email(sc));
             return Response.noContent().build();
         } catch (IllegalArgumentException e) {
             return Response.status(404).entity(Map.of("message", e.getMessage())).build();
