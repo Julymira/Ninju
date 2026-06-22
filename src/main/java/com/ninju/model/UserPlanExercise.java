@@ -34,18 +34,25 @@ public class UserPlanExercise {
 
     public UserPlanExercise() {}
 
+    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
     public UserPlan getPlan() { return plan; }
     public void setPlan(UserPlan plan) { this.plan = plan; }
+
     public Workout getWorkout() { return workout; }
     public void setWorkout(Workout workout) { this.workout = workout; }
+
     public Integer getSets() { return sets; }
     public void setSets(Integer sets) { this.sets = sets; }
+
     public Integer getReps() { return reps; }
     public void setReps(Integer reps) { this.reps = reps; }
+
     public Double getWeightKg() { return weightKg; }
     public void setWeightKg(Double weightKg) { this.weightKg = weightKg; }
+    
     public Double getDurationMinutes() { return durationMinutes; }
     public void setDurationMinutes(Double durationMinutes) { this.durationMinutes = durationMinutes; }
 }

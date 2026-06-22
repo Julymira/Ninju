@@ -39,47 +39,24 @@ public class Food {
     public Food() {}
 
     // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public Integer getCalories() {
-        return calories;
-    }
-    public void setCalories(Integer calories) {
-        this.calories = calories;
-    }
-    public Double getProtein() {
-        return protein;
-    }
-    public void setProtein(Double protein) {
-        this.protein = protein;
-    }
-    public Double getCarbohydrates() {
-        return carbohydrates;
-    }
-    public void setCarbohydrates(Double carbohydrates) {
-        this.carbohydrates = carbohydrates;
-    }
-    public Double getFat() {
-        return fat;
-    }
-    public void setFat(Double fat) {
-        this.fat = fat;
-    }
-    public User getOwner() {
-        return owner;
-    }
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public Integer getCalories() { return calories; }
+    public void setCalories(Integer calories) { this.calories = calories; }
+
+    public Double getProtein() { return protein; }
+    public void setProtein(Double protein) { this.protein = protein; }
+
+    public Double getCarbohydrates() { return carbohydrates; }
+    public void setCarbohydrates(Double carbohydrates) { this.carbohydrates = carbohydrates; }
+
+    public Double getFat() { return fat; }
+    public void setFat(Double fat) { this.fat = fat; }
+
+    public User getOwner() { return owner; }
+    public void setOwner(User owner) { this.owner = owner; }
 }

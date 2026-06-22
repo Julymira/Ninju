@@ -27,36 +27,15 @@ public class AuditLog {
     public AuditLog() {}
 
     // Getters e Setters
+    public Long getId() { return id;}
+    public void setId(Long id) {this.id = id;}
 
-    public Long getId() {
-        return id;
-    }
+    public String getActionExecuted() { return actionExecuted; }
+    public void setActionExecuted(String actionExecuted) { this.actionExecuted = actionExecuted; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getExecutedBy() { return executedBy; }
+    public void setExecutedBy(String executedBy) { this.executedBy = executedBy; }
 
-    public String getActionExecuted() {
-        return actionExecuted;
-    }
-
-    public void setActionExecuted(String actionExecuted) {
-        this.actionExecuted = actionExecuted;
-    }
-
-    public String getExecutedBy() {
-        return executedBy;
-    }
-
-    public void setExecutedBy(String executedBy) {
-        this.executedBy = executedBy;
-    }
-
-    public LocalDateTime getExecutionTime() {
-        return executionTime;
-    }
-
-    public void setExecutionTime(LocalDateTime executionTime) {
-        this.executionTime = executionTime;
-    }
+    public LocalDateTime getExecutionTime() { return executionTime; }
+    public void setExecutionTime(LocalDateTime executionTime) { this.executionTime = executionTime; }
 }
