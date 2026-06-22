@@ -25,6 +25,7 @@ public class UserController {
     public Response listAll(@Context SecurityContext sc) {
         try {
             return Response.ok(userBO.listAll(sc.getUserPrincipal().getName())).build();
+            
         } catch (Exception e) {
             return Response.serverError().entity(Map.of("erro", e.getMessage())).build();
         }
@@ -35,6 +36,7 @@ public class UserController {
     public Response findById(@PathParam("id") Long id, @Context SecurityContext sc) {
         try {
             return Response.ok(userBO.findById(id, sc.getUserPrincipal().getName())).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(Map.of("erro", e.getMessage())).build();
         }
@@ -45,6 +47,7 @@ public class UserController {
         try {
             return Response.status(Response.Status.CREATED)
                     .entity(userBO.create(dto, sc.getUserPrincipal().getName())).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("erro", e.getMessage())).build();
         }
@@ -55,6 +58,7 @@ public class UserController {
     public Response update(@PathParam("id") Long id, UserRequestDTO dto, @Context SecurityContext sc) {
         try {
             return Response.ok(userBO.update(id, dto, sc.getUserPrincipal().getName())).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(Map.of("erro", e.getMessage())).build();
         }
@@ -66,6 +70,7 @@ public class UserController {
         try {
             userBO.delete(id, sc.getUserPrincipal().getName());
             return Response.noContent().build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(Map.of("erro", e.getMessage())).build();
         }

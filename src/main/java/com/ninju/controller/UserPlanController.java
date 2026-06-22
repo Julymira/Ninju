@@ -32,6 +32,7 @@ public class UserPlanController {
     public Response listPlans(@Context SecurityContext sc) {
         try {
             return Response.ok(planBO.listPlans(userId(sc), principal(sc).getName())).build();
+
         } catch (Exception e) {
             return Response.serverError().entity(Map.of("erro", e.getMessage())).build();
         }
@@ -44,6 +45,7 @@ public class UserPlanController {
             return Response.status(Response.Status.CREATED)
                     .entity(planBO.createPlan(userId(sc), name, principal(sc).getName()))
                     .build();
+
         } catch (IllegalArgumentException | IllegalStateException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("erro", e.getMessage())).build();
         } catch (Exception e) {
@@ -57,6 +59,7 @@ public class UserPlanController {
         try {
             String name = (String) body.get("name");
             return Response.ok(planBO.renamePlan(id, userId(sc), name, principal(sc).getName())).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("erro", e.getMessage())).build();
         } catch (SecurityException e) {
@@ -72,6 +75,7 @@ public class UserPlanController {
         try {
             planBO.deletePlan(id, userId(sc), principal(sc).getName());
             return Response.noContent().build();
+
         } catch (SecurityException e) {
             return Response.status(Response.Status.FORBIDDEN).entity(Map.of("erro", e.getMessage())).build();
         } catch (IllegalArgumentException e) {
@@ -86,6 +90,7 @@ public class UserPlanController {
     public Response addExercise(@PathParam("id") Long id, Map<String, Object> body, @Context SecurityContext sc) {
         try {
             return Response.ok(planBO.addExercise(id, userId(sc), body, principal(sc).getName())).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("erro", e.getMessage())).build();
         } catch (SecurityException e) {
@@ -100,6 +105,7 @@ public class UserPlanController {
     public Response removeExercise(@PathParam("id") Long id, @PathParam("exId") Long exId, @Context SecurityContext sc) {
         try {
             return Response.ok(planBO.removeExercise(id, userId(sc), exId, principal(sc).getName())).build();
+            
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(Map.of("erro", e.getMessage())).build();
         } catch (SecurityException e) {

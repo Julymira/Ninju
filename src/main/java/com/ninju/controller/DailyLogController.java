@@ -30,6 +30,7 @@ public class DailyLogController {
             JWTCallerPrincipal p = (JWTCallerPrincipal) sc.getUserPrincipal();
             Long userId = Long.parseLong(p.getClaim("userId").toString());
             return Response.ok(dailyLogBO.listByUser(userId, p.getName())).build();
+
         } catch (Exception e) {
             return Response.serverError().entity(Map.of("erro", e.getMessage())).build();
         }
@@ -43,6 +44,7 @@ public class DailyLogController {
             Long userId = Long.parseLong(p.getClaim("userId").toString());
             LocalDate date = (dateStr != null && !dateStr.isBlank()) ? LocalDate.parse(dateStr) : LocalDate.now();
             return Response.ok(dailyLogBO.getReport(userId, date, p.getName())).build();
+
         } catch (Exception e) {
             return Response.serverError().entity(Map.of("erro", e.getMessage())).build();
         }
@@ -56,6 +58,7 @@ public class DailyLogController {
             Long userId = Long.parseLong(p.getClaim("userId").toString());
             return Response.status(Response.Status.CREATED)
                     .entity(dailyLogBO.addEntry(userId, dto, p.getName())).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("erro", e.getMessage())).build();
         }
@@ -69,6 +72,7 @@ public class DailyLogController {
             Long userId = Long.parseLong(p.getClaim("userId").toString());
             dailyLogBO.removeEntry(userId, entryId, p.getName());
             return Response.noContent().build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(Map.of("erro", e.getMessage())).build();
         } catch (SecurityException e) {
@@ -83,6 +87,7 @@ public class DailyLogController {
             JWTCallerPrincipal p = (JWTCallerPrincipal) sc.getUserPrincipal();
             Long userId = Long.parseLong(p.getClaim("userId").toString());
             return Response.ok(dailyLogBO.registrarRefeicao(userId, dto, p.getName())).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("erro", e.getMessage())).build();
         }
@@ -95,6 +100,7 @@ public class DailyLogController {
             JWTCallerPrincipal p = (JWTCallerPrincipal) sc.getUserPrincipal();
             Long userId = Long.parseLong(p.getClaim("userId").toString());
             return Response.ok(dailyLogBO.registrarTreino(userId, dto, p.getName())).build();
+            
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("erro", e.getMessage())).build();
         }

@@ -37,6 +37,7 @@ public class AuthController {
         try {
             LoginResponseDTO response = authBO.login(dto);
             return Response.ok(response).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(Map.of("erro", e.getMessage()))
@@ -57,6 +58,7 @@ public class AuthController {
             Long userId = Long.parseLong(principal.getClaim("userId").toString());
             dto.role = null;
             return Response.ok(userBO.update(userId, dto, principal.getName())).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(Map.of("erro", e.getMessage()))
@@ -73,6 +75,7 @@ public class AuthController {
             Long userId = Long.parseLong(principal.getClaim("userId").toString());
             userBO.changePassword(userId, dto, principal.getName());
             return Response.noContent().build();
+
         } catch (SecurityException e) {
             return Response.status(Response.Status.UNAUTHORIZED)
                     .entity(Map.of("erro", e.getMessage()))
@@ -92,6 +95,7 @@ public class AuthController {
             JWTCallerPrincipal principal = (JWTCallerPrincipal) sc.getUserPrincipal();
             Long userId = Long.parseLong(principal.getClaim("userId").toString());
             return Response.ok(userBO.updateGoals(userId, dto, principal.getName())).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(Map.of("erro", e.getMessage()))
@@ -108,6 +112,7 @@ public class AuthController {
             return Response.status(Response.Status.CREATED)
                     .entity(userBO.create(dto, "self-register"))
                     .build();
+                    
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(Map.of("erro", e.getMessage()))

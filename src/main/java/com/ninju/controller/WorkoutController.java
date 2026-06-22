@@ -26,6 +26,7 @@ public class WorkoutController {
             JWTCallerPrincipal p = (JWTCallerPrincipal) sc.getUserPrincipal();
             Long userId = Long.parseLong(p.getClaim("userId").toString());
             return Response.ok(workoutBO.listVisible(userId, p.getName())).build();
+
         } catch (Exception e) {
             return Response.serverError().entity(Map.of("erro", e.getMessage())).build();
         }
@@ -36,6 +37,7 @@ public class WorkoutController {
     public Response findById(@PathParam("id") Long id, @Context SecurityContext sc) {
         try {
             return Response.ok(workoutBO.findById(id, sc.getUserPrincipal().getName())).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(Map.of("erro", e.getMessage())).build();
         }
@@ -50,6 +52,7 @@ public class WorkoutController {
             return Response.status(Response.Status.CREATED)
                     .entity(workoutBO.create(body, userId, isAdmin, p.getName()))
                     .build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("erro", e.getMessage())).build();
         } catch (Exception e) {
@@ -66,6 +69,7 @@ public class WorkoutController {
             boolean isAdmin = sc.isUserInRole("ADMIN");
             workoutBO.delete(id, userId, isAdmin, p.getName());
             return Response.noContent().build();
+            
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(Map.of("erro", e.getMessage())).build();
         } catch (SecurityException e) {

@@ -27,6 +27,7 @@ public class FoodController {
             JWTCallerPrincipal principal = (JWTCallerPrincipal) sc.getUserPrincipal();
             Long userId = Long.parseLong(principal.getClaim("userId").toString());
             return Response.ok(foodBO.listVisible(userId, principal.getName())).build();
+            
         } catch (Exception e) {
             return Response.serverError().entity(Map.of("erro", e.getMessage())).build();
         }
@@ -37,6 +38,7 @@ public class FoodController {
     public Response findById(@PathParam("id") Long id, @Context SecurityContext sc) {
         try {
             return Response.ok(foodBO.findById(id, sc.getUserPrincipal().getName())).build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(Map.of("erro", e.getMessage())).build();
         }
@@ -51,6 +53,7 @@ public class FoodController {
             return Response.status(Response.Status.CREATED)
                     .entity(foodBO.create(body, userId, isAdmin, principal.getName()))
                     .build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("erro", e.getMessage())).build();
         } catch (Exception e) {
@@ -67,6 +70,7 @@ public class FoodController {
             boolean isAdmin = sc.isUserInRole("ADMIN");
             foodBO.delete(id, userId, isAdmin, principal.getName());
             return Response.noContent().build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(Map.of("erro", e.getMessage())).build();
         } catch (SecurityException e) {

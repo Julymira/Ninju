@@ -37,6 +37,7 @@ public class AvatarController {
                     .collect(Collectors.toList());
 
             return Response.ok(files).build();
+            
         } catch (Exception e) {
             return Response.ok(Collections.emptyList()).build();
         }
