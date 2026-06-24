@@ -16,7 +16,7 @@ public class WaterLogDao {
 
     @Transactional
     public void save(WaterLog waterLog) {
-        em.persist(waterLog);
+        em.merge(waterLog);
     }
 
     @Transactional

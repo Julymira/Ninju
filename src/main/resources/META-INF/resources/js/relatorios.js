@@ -59,13 +59,15 @@ function toISOLocal(d) {
 async function loadReport() {
     const dateStr = toISOLocal(currentDate);
     try {
-        const [foodData, workoutLogs] = await Promise.all([
+        const [foodData, workoutLogs, waterLog] = await Promise.all([
             apiGet(`/daily-logs/report?date=${dateStr}`),
-            apiGet(`/workout-logs?date=${dateStr}`).catch(() => [])
+            apiGet(`/workout-logs?date=${dateStr}`).catch(() => []),
+            apiGet(`/water?date=${dateStr}`).catch(() => null)
         ]);
         renderCalorias(foodData);
         renderMacros(foodData);
         renderActivity(workoutLogs, foodData.totalCalories || 0);
+        renderAgua(waterLog);
     } catch (err) {
         console.error(err);
     }
@@ -228,6 +230,22 @@ function renderActivity(logs, totalConsumed) {
     document.getElementById('saldoLiquido').textContent    = `${Math.round(liquido)} kcal`;
     document.getElementById('saldoLiquido').style.color    = liquido <= 0 ? '#28a745' : '#dc3545';
     saldoCard.style.display = 'block';
+}
+
+// ── Render hidratação ─────────────────────────────────────────────────────
+function renderAgua(log) {
+    if (!log) {
+        document.getElementById('reportWaterTotal').textContent = '0 ml';
+        document.getElementById('reportWaterMeta').textContent = 'Nenhum registro para este dia';
+        document.getElementById('reportWaterPct').textContent = '0%';
+        return;
+    }
+
+    const pct = Math.min(log.percentageAchieved, 100).toFixed(0);
+    document.getElementById('reportWaterTotal').textContent = log.amountMl + ' ml';
+    document.getElementById('reportWaterMeta').textContent = `Meta: ${log.goalMl} ml`;
+    document.getElementById('reportWaterBar').style.width = pct + '%';
+    document.getElementById('reportWaterPct').textContent = pct + '%';
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────

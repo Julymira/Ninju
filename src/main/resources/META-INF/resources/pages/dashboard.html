@@ -42,6 +42,10 @@
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 5v14M18 5v14M2 9h4M18 9h4M2 15h4M18 15h4"/></svg>
                         Treinos
                     </a>
+                    <a href="water.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8 2 5 7 5 12c0 3.87 3.13 7 7 7s7-3.13 7-7c0-5-3-10-7-10z"/></svg>
+                        Água
+                    </a>
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item dropdown-item-danger" onclick="logout()">
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -95,6 +99,20 @@
                 </div>
                 <div class="stat-val" id="statNet">—</div>
                 <div class="stat-sub">consumidas − queimadas</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span class="stat-icon">💧</span>
+                    <span class="stat-label">Hidratação</span>
+                </div>
+                <div class="stat-val" id="statWater">—</div>
+                <div class="stat-progress-wrap">
+                    <div class="stat-progress-bar">
+                        <div class="stat-progress-fill" id="statWaterBar" style="width:0%;background:#3b82f6"></div>
+                    </div>
+                    <span class="stat-progress-label" id="statWaterLabel">Meta não definida</span>
+                </div>
             </div>
         </div>
 
@@ -171,6 +189,13 @@
                 <div>
                     <div class="shortcut-title">Treinos</div>
                     <div class="shortcut-sub">Catálogo e planos</div>
+                </div>
+            </a>
+            <a href="water.html" class="shortcut-card">
+                <span class="shortcut-icon">💧</span>
+                <div>
+                    <div class="shortcut-title">Água</div>
+                    <div class="shortcut-sub">Registrar hidratação</div>
                 </div>
             </a>
             <a href="users.html" class="shortcut-card" id="card-users" style="display:none">

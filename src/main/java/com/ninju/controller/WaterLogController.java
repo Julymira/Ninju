@@ -19,11 +19,11 @@ public class WaterLogController {
     
     // GET /water — retorna o log do dia do usuário logado
     @GET
-    public Response getTodayLog(@QueryParam("date") LocalDate date, @Context SecurityContext sc) {
+    public Response getTodayLog(@QueryParam("date") String dateStr, @Context SecurityContext sc) {
         try {
             JWTCallerPrincipal p = (JWTCallerPrincipal) sc.getUserPrincipal();
             Long userId = Long.parseLong(p.getClaim("userId").toString());
-            if (date == null) date = LocalDate.now();
+            LocalDate date = (dateStr != null && !dateStr.isBlank()) ? LocalDate.parse(dateStr) : LocalDate.now();
             return Response.ok(waterLogBO.getTodayLog(userId, date, p.getName())).build();
 
         } catch (Exception e) {
@@ -35,11 +35,11 @@ public class WaterLogController {
     // POST /water/add — adiciona uma quantidade (ex: 200ml)
     @POST
     @Path("/add")
-    public Response addWater(@QueryParam("date") LocalDate date, @QueryParam("amount") int amount, @Context SecurityContext sc) {
+    public Response addWater(@QueryParam("date") String dateStr, @QueryParam("amount") int amount, @Context SecurityContext sc) {
         try {
             JWTCallerPrincipal p = (JWTCallerPrincipal) sc.getUserPrincipal();
             Long userId = Long.parseLong(p.getClaim("userId").toString());
-            if (date == null) date = LocalDate.now();
+            LocalDate date = (dateStr != null && !dateStr.isBlank()) ? LocalDate.parse(dateStr) : LocalDate.now();
             return Response.ok(waterLogBO.addWater(userId, date, amount, p.getName())).build();
 
         } catch (IllegalArgumentException e) {
@@ -52,11 +52,11 @@ public class WaterLogController {
     // PUT /water/goal — atualiza a meta diária
     @PUT
     @Path("/goal")
-    public Response updateGoal(@QueryParam("date") LocalDate date, @QueryParam("goal") int goal, @Context SecurityContext sc) {
+    public Response updateGoal(@QueryParam("date") String dateStr, @QueryParam("goal") int goal, @Context SecurityContext sc) {
         try {
             JWTCallerPrincipal p = (JWTCallerPrincipal) sc.getUserPrincipal();
             Long userId = Long.parseLong(p.getClaim("userId").toString());
-            if (date == null) date = LocalDate.now();
+            LocalDate date = (dateStr != null && !dateStr.isBlank()) ? LocalDate.parse(dateStr) : LocalDate.now();
             return Response.ok(waterLogBO.updateGoal(userId, date, goal, p.getName())).build();
 
         } catch (IllegalArgumentException e) {

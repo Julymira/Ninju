@@ -24,14 +24,16 @@ function toISOLocal(d) {
 async function loadDashboard() {
     const date = toISOLocal(today);
     try {
-        const [foodData, workoutLogs] = await Promise.all([
+        const [foodData, workoutLogs, waterLog] = await Promise.all([
             apiGet(`/daily-logs/report?date=${date}`),
-            apiGet(`/workout-logs?date=${date}`).catch(() => [])
+            apiGet(`/workout-logs?date=${date}`).catch(() => []),
+            apiGet(`/water?date=${date}`).catch(() => null)
         ]);
         renderStats(foodData, workoutLogs);
         renderMacros(foodData);
         renderMeals(foodData);
         renderActivity(workoutLogs);
+        renderWater(waterLog);
     } catch (err) {
         console.error('Erro ao carregar dashboard:', err);
     }
@@ -146,6 +148,21 @@ function renderActivity(logs) {
             ${exList}${more}
         </div>`;
     }).join('');
+}
+
+// ── Hidratação ────────────────────────────────────────────────────────────
+function renderWater(log) {
+    if (!log) {
+        document.getElementById('statWater').textContent = '0 ml';
+        document.getElementById('statWaterLabel').textContent = 'Nenhum registro hoje';
+        return;
+    }
+
+    document.getElementById('statWater').textContent = log.amountMl + ' ml';
+
+    const pct = Math.min(Math.round(log.percentageAchieved), 100);
+    document.getElementById('statWaterBar').style.width = pct + '%';
+    document.getElementById('statWaterLabel').textContent = `${pct}% da meta (${log.goalMl} ml)`;
 }
 
 loadDashboard();

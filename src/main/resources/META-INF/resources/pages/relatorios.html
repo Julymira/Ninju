@@ -43,6 +43,10 @@
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 5v14M18 5v14M2 9h4M18 9h4M2 15h4M18 15h4"/></svg>
                         Treinos
                     </a>
+                    <a href="water.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8 2 5 7 5 12c0 3.87 3.13 7 7 7s7-3.13 7-7c0-5-3-10-7-10z"/></svg>
+                        Água
+                    </a>
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item dropdown-item-danger" onclick="logout()">
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -66,6 +70,7 @@
         <div class="report-tabs">
             <button class="report-tab active" data-tab="calorias">CALORIAS</button>
             <button class="report-tab" data-tab="macros">MACROS</button>
+            <button class="report-tab" data-tab="agua">HIDRATAÇÃO</button>
         </div>
 
         <!-- ── ABA CALORIAS ── -->
@@ -118,6 +123,22 @@
         <div class="report-tab-content" id="tab-macros">
             <div class="report-card macros-card">
                 <div class="macro-bars" id="macroBars"></div>
+            </div>
+        </div>
+
+        <!-- ── ABA HIDRATAÇÃO ── -->
+        <div class="report-tab-content" id="tab-agua">
+            <div class="report-card" style="padding:24px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                    <span style="font-size:1.1rem;font-weight:600">💧 Hidratação do Dia</span>
+                    <a href="water.html" style="font-size:0.85rem;color:var(--primary)">Registrar →</a>
+                </div>
+                <div style="font-size:2rem;font-weight:700;margin-bottom:4px" id="reportWaterTotal">—</div>
+                <div style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:16px" id="reportWaterMeta"></div>
+                <div style="background:var(--border);border-radius:8px;height:12px;overflow:hidden">
+                    <div id="reportWaterBar" style="height:100%;background:#3b82f6;border-radius:8px;width:0%;transition:width 0.4s ease"></div>
+                </div>
+                <div style="text-align:right;margin-top:6px;font-size:0.85rem;color:var(--text-secondary)" id="reportWaterPct">0%</div>
             </div>
         </div>
 

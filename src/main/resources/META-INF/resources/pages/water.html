@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninju - Água</title>
+    <link rel="stylesheet" href="../css/global.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="dashboard.html" class="navbar-brand">NINJU</a>
+        <ul class="navbar-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="daily-log.html">Diário</a></li>
+            <li><a href="relatorios.html">Relatórios</a></li>
+            <li id="nav-users" style="display:none"><a href="users.html">Usuários</a></li>
+            <li id="nav-logs" style="display:none"><a href="logs.html">Logs</a></li>
+        </ul>
+        <div class="navbar-user">
+            <button class="avatar-btn" id="avatarBtn" onclick="toggleDropdown()">
+                <img id="navAvatar" src="../images/avatars/default.svg" alt="avatar">
+            </button>
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="dropdown-header">
+                    <img class="dropdown-avatar" id="dropdownAvatar" src="../images/avatars/default.svg" alt="avatar">
+                    <div>
+                        <div class="dropdown-username" id="dropdownName"></div>
+                        <div class="dropdown-role" id="dropdownRole"></div>
+                    </div>
+                </div>
+                <div class="dropdown-menu">
+                    <a href="profile.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                        Meu Perfil
+                    </a>
+                    <a href="foods.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                        Alimentos
+                    </a>
+                    <a href="water.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        Água
+                    </a>
+                    <a href="workouts.html" class="dropdown-item">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 5v14M18 5v14M2 9h4M18 9h4M2 15h4M18 15h4"/></svg>
+                        Treinos
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item dropdown-item-danger" onclick="logout()">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">💦 Água</h1>
+        </div>
+
+        <div id="alert" class="alert alert-error"></div>
+
+        <!-- Progresso do dia -->
+        <div class="card" style="margin-bottom:24px;padding:24px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                <span style="font-size:1.1rem;font-weight:600">Hoje</span>
+                <span style="color:var(--text-secondary)">Meta: <strong id="meta">2000 ml</strong></span>
+            </div>
+            <div style="font-size:2rem;font-weight:700;margin-bottom:12px" id="total-bebido">0 ml</div>
+            <div style="background:var(--border);border-radius:8px;height:12px;overflow:hidden">
+                <div id="progresso-bar" style="height:100%;background:var(--primary);border-radius:8px;width:0%;transition:width 0.4s ease"></div>
+            </div>
+            <div style="text-align:right;margin-top:6px;font-size:0.85rem;color:var(--text-secondary)" id="progresso-pct">0%</div>
+        </div>
+
+        <!-- Botões rápidos -->
+        <div class="card" style="margin-bottom:24px;padding:24px">
+            <div style="font-weight:600;margin-bottom:16px">Adicionar</div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+                <input type="number" id="input-quantidade" class="form-control" placeholder="Ex: 250" min="1" style="max-width:180px">
+                <button class="btn btn-secondary" onclick="adicionarAgua(document.getElementById('input-quantidade').value)">Adicionar</button>
+            </div>
+        </div>
+
+        <!-- Editar meta -->
+        <div class="card" style="padding:24px">
+            <div style="font-weight:600;margin-bottom:16px">Meta diária</div>
+            <div style="display:flex;gap:12px;align-items:center">
+                <input type="number" id="input-meta" class="form-control" placeholder="Ex: 2500" min="1" style="max-width:180px">
+                <button class="btn btn-primary" onclick="salvarMeta()">Salvar meta</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/water.js"></script>
+</body>
+</html>
