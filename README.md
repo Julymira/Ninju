@@ -27,7 +27,7 @@ As chaves RSA usadas para assinar e verificar os tokens JWT **não são versiona
 Abra o terminal do VS Code (`Ctrl + J`) e rode os dois comandos abaixo:
 
 ```bash
-openssl genrsa -out src/main/resources/privateKey.pem 2048
+openssl genpkey -algorithm RSA -out src/main/resources/privateKey.pem -pkeyopt rsa_keygen_bits:2048
 openssl rsa -pubout -in src/main/resources/privateKey.pem -out src/main/resources/publicKey.pem
 ```
 
