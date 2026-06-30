@@ -47,7 +47,10 @@ public class WaterLogBO {
             waterLogDao.save(log);
         }
 
-        return getTodayLog(userId, date, executedBy);
+        auditLogDao.save("ADICIONAR_AGUA: " + amountMl + "ml em " + date, executedBy);
+        WaterLog updated = waterLogDao.findByUserAndDate(userId, date);
+        return new WaterLogDTO(updated.getId(), updated.getDate(), updated.getAmountMl(), updated.getGoalMl(),
+                (double) updated.getAmountMl() / updated.getGoalMl() * 100);
     }
 
     public WaterLogDTO updateGoal(Long userId, LocalDate date, int goalMl, String executedBy) {
@@ -60,10 +63,12 @@ public class WaterLogBO {
             log.setAmountMl(0);
         }
 
-        log.setGoalMl(goalMl); //atualiza só a meta
+        log.setGoalMl(goalMl);
         waterLogDao.save(log);
 
-
-        return getTodayLog(userId, date, executedBy);
+        auditLogDao.save("ATUALIZAR_META_AGUA: " + goalMl + "ml em " + date, executedBy);
+        WaterLog updated = waterLogDao.findByUserAndDate(userId, date);
+        return new WaterLogDTO(updated.getId(), updated.getDate(), updated.getAmountMl(), updated.getGoalMl(),
+                (double) updated.getAmountMl() / updated.getGoalMl() * 100);
     }
 }
