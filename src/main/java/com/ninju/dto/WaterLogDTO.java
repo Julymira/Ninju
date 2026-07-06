@@ -14,7 +14,7 @@ public class WaterLogDTO {
         this.date = date;
         this.amountMl = amountMl;
         this.goalMl = goalMl;
-        this.percentageAchieved = (amountMl / goalMl) * 100;
+        this.percentageAchieved = percentageAchieved;
     }
     
 }
